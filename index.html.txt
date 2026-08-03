@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome to Vinn</title>
+    <style>
+        body { font-family: sans-serif; text-align: center; margin-top: 50px; }
+        h1 { color: #333; }
+    </style>
+</head>
+<body>
+    <h1>welcome to vinn</h1>
+    <p>how to make you decide Valuable</p>
+    <a href="https://google.com">구글로 가기</a>
+</body>
+</html>
