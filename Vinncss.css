@@ -4,15 +4,32 @@
     padding: 0;
     box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
+    scroll-behavior: smooth;
 }
 
 body {
     background-color: #0d0d0d;
     color: #f4f4f4;
     line-height: 1.6;
+    overflow-x: hidden;
 }
 
-/* 헤더 스타일 */
+/* 스크롤바 고급화 */
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background: #0d0d0d;
+}
+::-webkit-scrollbar-thumb {
+    background: #222;
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #ff6b6b;
+}
+
+/* 헤더 스타일 (유리모피즘 적용) */
 header {
     position: fixed;
     top: 0;
@@ -21,9 +38,11 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 8%;
-    background: rgba(13, 13, 13, 0.9);
-    backdrop-filter: blur(10px);
+    padding: 22px 8%;
+    background: rgba(13, 13, 13, 0.75);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     z-index: 1000;
 }
 
@@ -40,14 +59,15 @@ header {
 nav ul {
     display: flex;
     list-style: none;
-    gap: 30px;
+    gap: 35px;
 }
 
 nav ul li a {
     text-decoration: none;
-    color: #f4f4f4;
-    font-weight: 400;
-    transition: color 0.3s;
+    color: #bbb;
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: color 0.3s ease;
 }
 
 nav ul li a:hover {
@@ -62,122 +82,162 @@ nav ul li a:hover {
     justify-content: center;
     text-align: center;
     padding: 0 20px;
-    background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%);
+    background: radial-gradient(circle at center, #1c1c1c 0%, #0d0d0d 70%);
 }
 
 .hero-content h3 {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     color: #ff6b6b;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
+    font-weight: 500;
+    letter-spacing: 1px;
 }
 
 .hero-content h1 {
-    font-size: 4rem;
+    font-size: 4.5rem;
     font-weight: 700;
     margin-bottom: 15px;
     letter-spacing: 3px;
+    background: linear-gradient(to right, #fff, #888);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .hero-content p {
-    font-size: 1.1rem;
-    color: #aaa;
-    margin-bottom: 30px;
+    font-size: 1.15rem;
+    color: #999;
+    margin-bottom: 35px;
+    font-weight: 300;
 }
 
-/* 버튼 공통 스타일 */
+/* 버튼 공통 스타일 (고급스러운 그림자 및 전환 효과) */
 .btn {
     display: inline-block;
-    padding: 12px 30px;
+    padding: 14px 32px;
     background-color: #ff6b6b;
     color: #fff;
     border-radius: 30px;
     text-decoration: none;
     font-weight: 600;
-    transition: background 0.3s, transform 0.2s;
+    font-size: 0.95rem;
+    box-shadow: 0 10px 25px rgba(255, 107, 107, 0.3);
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 .btn:hover {
     background-color: #ff5252;
     transform: translateY(-3px);
+    box-shadow: 0 15px 30px rgba(255, 107, 107, 0.4);
 }
 
-/* 공통 섹션 패딩 */
+/* 공통 섹션 패딩 및 스크롤 애니메이션 초기 상태 */
 section {
-    padding: 100px 8%;
+    padding: 120px 8%;
+}
+
+.fade-in {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 section h2 {
     font-size: 2.5rem;
-    margin-bottom: 40px;
+    margin-bottom: 50px;
     text-align: center;
     font-weight: 600;
+    letter-spacing: 1px;
 }
 
 /* About 섹션 */
 .about-text {
-    max-width: 700px;
+    max-width: 750px;
     margin: 0 auto;
     text-align: center;
-    font-size: 1.2rem;
-    color: #ccc;
+    font-size: 1.15rem;
+    color: #b0b0b0;
+    line-height: 1.8;
 }
 
-/* 프로젝트 섹션 */
+/* 프로젝트 섹션 (고급 카드 레이아웃) */
 .project-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 30px;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 40px;
 }
 
 .project-card {
-    background: #1a1a1a;
-    border-radius: 15px;
+    background: #141414;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
     overflow: hidden;
-    transition: transform 0.3s;
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 .project-card:hover {
-    transform: translateY(-10px);
+    transform: translateY(-8px);
+    border-color: rgba(255, 107, 107, 0.3);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+}
+
+.project-img-wrapper {
+    overflow: hidden;
+    width: 100%;
+    height: 220px;
 }
 
 .project-img {
-    height: 200px;
+    height: 100%;
     width: 100%;
+    transition: transform 0.5s ease;
 }
 
-.bg-1 { background: linear-gradient(45deg, #2c3e50, #3498db); }
-.bg-2 { background: linear-gradient(45deg, #8e44ad, #e74c3c); }
+.project-card:hover .project-img {
+    transform: scale(1.05);
+}
+
+.bg-1 { background: linear-gradient(135deg, #2c3e50, #1a252f); }
+.bg-2 { background: linear-gradient(135deg, #3a1c71, #d76d77); }
 
 .project-info {
-    padding: 20px;
+    padding: 25px;
 }
 
 .project-info h3 {
     margin-bottom: 10px;
-    font-size: 1.3rem;
+    font-size: 1.35rem;
+    font-weight: 600;
 }
 
 .project-info p {
-    color: #aaa;
+    color: #999;
     font-size: 0.95rem;
+    line-height: 1.6;
 }
 
 /* Contact 섹션 */
 .contact {
     text-align: center;
-    background: #141414;
+    background: radial-gradient(circle at center, #151515 0%, #0d0d0d 70%);
 }
 
 .contact p {
-    color: #aaa;
-    margin-bottom: 30px;
+    color: #999;
+    margin-bottom: 35px;
+    font-size: 1.1rem;
 }
 
 /* 푸터 */
 footer {
     text-align: center;
-    padding: 30px;
-    background: #090909;
-    color: #666;
-    font-size: 0.9rem;
+    padding: 40px;
+    background: #080808;
+    color: #555;
+    font-size: 0.85rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.03);
 }
