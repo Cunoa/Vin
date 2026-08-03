@@ -110,7 +110,7 @@ nav ul li a:hover {
     font-weight: 300;
 }
 
-/* 버튼 공통 스타일 (고급스러운 그림자 및 전환 효과) */
+/* 버튼 공통 스타일 */
 .btn {
     display: inline-block;
     padding: 14px 32px;
@@ -120,6 +120,8 @@ nav ul li a:hover {
     text-decoration: none;
     font-weight: 600;
     font-size: 0.95rem;
+    border: none;
+    cursor: pointer;
     box-shadow: 0 10px 25px rgba(255, 107, 107, 0.3);
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
@@ -130,7 +132,7 @@ nav ul li a:hover {
     box-shadow: 0 15px 30px rgba(255, 107, 107, 0.4);
 }
 
-/* 공통 섹션 패딩 및 스크롤 애니메이션 초기 상태 */
+/* 공통 섹션 패딩 및 애니메이션 */
 section {
     padding: 120px 8%;
 }
@@ -148,7 +150,7 @@ section {
 
 section h2 {
     font-size: 2.5rem;
-    margin-bottom: 50px;
+    margin-bottom: 20px;
     text-align: center;
     font-weight: 600;
     letter-spacing: 1px;
@@ -164,7 +166,7 @@ section h2 {
     line-height: 1.8;
 }
 
-/* 프로젝트 섹션 (고급 카드 레이아웃) */
+/* 프로젝트 섹션 */
 .project-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -218,6 +220,76 @@ section h2 {
     color: #999;
     font-size: 0.95rem;
     line-height: 1.6;
+}
+
+/* 테트리스 섹션 스타일 */
+.tetris-section {
+    background: #111;
+    text-align: center;
+}
+
+.tetris-desc {
+    color: #999;
+    margin-bottom: 40px;
+    font-size: 1.05rem;
+}
+
+.tetris-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    flex-wrap: wrap;
+}
+
+.tetris-board-wrapper {
+    background: #000;
+    padding: 10px;
+    border-radius: 12px;
+    border: 2px solid rgba(255, 107, 107, 0.3);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+}
+
+canvas {
+    display: block;
+    background: #0a0a0a;
+}
+
+.tetris-sidebar {
+    background: #181818;
+    padding: 30px;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    min-width: 200px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+}
+
+.score-board span {
+    font-size: 0.85rem;
+    color: #888;
+    letter-spacing: 1px;
+}
+
+.score-board h3 {
+    font-size: 2rem;
+    color: #ff6b6b;
+}
+
+.controls-guide {
+    text-align: left;
+    font-size: 0.85rem;
+    color: #aaa;
+    background: #111;
+    padding: 15px;
+    border-radius: 8px;
+    width: 100%;
+}
+
+.controls-guide p {
+    margin-bottom: 5px;
 }
 
 /* Contact 섹션 */
