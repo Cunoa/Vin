@@ -1,2 +1,2 @@
 # Vin
-how to make this
+First Ritual
