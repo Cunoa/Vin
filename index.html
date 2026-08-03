@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VINN | Creative Portfolio</title>
-    <!-- Vinncss.css 파일이 정상적으로 연결된 코드입니다 -->
+    <!-- Vinncss.css 파일 연동 -->
     <link rel="stylesheet" href="Vinncss.css">
     <!-- 구글 폰트 연동 -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
@@ -34,7 +34,7 @@
     </section>
 
     <!-- About 섹션 -->
-    <section id="about" class="about">
+    <section id="about" class="about fade-in">
         <h2>About Me</h2>
         <div class="about-container">
             <div class="about-text">
@@ -44,18 +44,22 @@
     </section>
 
     <!-- 프로젝트 섹션 -->
-    <section id="projects" class="projects">
+    <section id="projects" class="projects fade-in">
         <h2>Featured Projects</h2>
         <div class="project-grid">
             <div class="project-card">
-                <div class="project-img bg-1"></div>
+                <div class="project-img-wrapper">
+                    <div class="project-img bg-1"></div>
+                </div>
                 <div class="project-info">
                     <h3>Project One</h3>
                     <p>HTML, CSS, JavaScript를 활용한 반응형 웹사이트 제작 프로젝트입니다.</p>
                 </div>
             </div>
             <div class="project-card">
-                <div class="project-img bg-2"></div>
+                <div class="project-img-wrapper">
+                    <div class="project-img bg-2"></div>
+                </div>
                 <div class="project-info">
                     <h3>Project Two</h3>
                     <p>사용자 중심의 UI/UX 디자인 및 브랜드 아이덴티티 구축 작업입니다.</p>
@@ -65,7 +69,7 @@
     </section>
 
     <!-- 연락처 섹션 -->
-    <section id="contact" class="contact">
+    <section id="contact" class="contact fade-in">
         <h2>Get In Touch</h2>
         <p>함께 멋진 작업을 만들어갈 기회를 기다리고 있습니다.</p>
         <a href="mailto:your_email@example.com" class="btn">Contact Me</a>
@@ -76,5 +80,19 @@
         <p>&copy; 2026 VINN. All rights reserved.</p>
     </footer>
 
+    <!-- 스크롤 애니메이션을 위한 자바스크립트 -->
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.fade-in').forEach((section) => {
+            observer.observe(section);
+        });
+    </script>
 </body>
 </html>
