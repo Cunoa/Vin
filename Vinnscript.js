@@ -217,6 +217,11 @@ const player = {
 };
 
 document.addEventListener('keydown', event => {
+    // 테트리스 게임 중 화살표 키를 누를 때 화면이 스크롤되는 기본 동작을 막음
+    if (['ArrowLeft', 'ArrowRight', 'ArrowDown', 'ArrowUp', ' '].includes(event.key)) {
+        event.preventDefault();
+    }
+
     if (event.key === 'ArrowLeft') {
         playerMove(-1);
     } else if (event.key === 'ArrowRight') {
