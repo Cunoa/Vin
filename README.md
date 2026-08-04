@@ -1,2 +1,2 @@
 # Vinn
-First Ritual / production
+First production
