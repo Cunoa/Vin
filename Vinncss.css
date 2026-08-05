@@ -7,9 +7,27 @@
 }
 
 body {
-    background-color: #0d0d0d;
+    min-height: 100%;
     color: #f4f4f4;
     line-height: 1.6;
+    background: #0d0d0d;
+    transition: background 0.5s ease;
+}
+
+body.bg-about {
+    background: linear-gradient(135deg, #1f2a4f 0%, #13203b 100%);
+}
+
+body.bg-product {
+    background: linear-gradient(135deg, #133a61 0%, #0d2d4c 100%);
+}
+
+body.bg-projects {
+    background: linear-gradient(135deg, #4b1f5c 0%, #25152c 100%);
+}
+
+body.bg-contact {
+    background: linear-gradient(135deg, #1f4c2f 0%, #122b1d 100%);
 }
 
 /* 헤더 스타일 */
@@ -112,15 +130,52 @@ nav ul li:nth-child(4) a.active {
 
 /* 히어로 섹션 */
 .hero {
+    position: relative;
     min-height: calc(100vh - 80px);
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 0 20px;
     background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%);
+    overflow: hidden;
+}
+
+.hero-video-wrapper {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.hero-video {
+    width: min(100%, 1000px);
+    aspect-ratio: 16 / 9;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 35px 90px rgba(0, 0, 0, 0.55);
+}
+
+.hero-video::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.45));
+    pointer-events: none;
+}
+
+.hero-video video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: saturate(0.8) brightness(0.7);
 }
 
 .hero-banner {
+    position: relative;
+    z-index: 2;
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 40px;
@@ -236,12 +291,28 @@ section h2 {
 }
 
 /* About 섹션 */
+#about {
+    background: linear-gradient(135deg, #22315a 0%, #15213c 100%);
+}
+
 .about-text {
     max-width: 700px;
     margin: 0 auto;
     text-align: center;
     font-size: 1.2rem;
     color: #ccc;
+}
+
+#product {
+    background: linear-gradient(135deg, #1b3f6a 0%, #102a47 100%);
+}
+
+#projects {
+    background: linear-gradient(135deg, #512b68 0%, #261634 100%);
+}
+
+#contact {
+    background: linear-gradient(135deg, #215435 0%, #132d20 100%);
 }
 
 /* 프로젝트 섹션 */
@@ -294,7 +365,84 @@ section h2 {
     color: #aaa;
     margin-bottom: 30px;
 }
+#guestbook {
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 30px;
+    padding: 70px 40px;
+}
 
+.guestbook-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    display: grid;
+    gap: 30px;
+}
+
+#guestbook-form {
+    display: grid;
+    gap: 16px;
+}
+
+#guestbook-input {
+    width: 100%;
+    resize: vertical;
+    min-height: 140px;
+    padding: 18px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.04);
+    color: #f4f4f4;
+    font-size: 1rem;
+    line-height: 1.7;
+}
+
+#guestbook-input::placeholder {
+    color: #7a7a7a;
+}
+
+.guestbook-note {
+    color: #aaa;
+    font-size: 0.95rem;
+}
+
+.guestbook-list {
+    display: grid;
+    gap: 16px;
+}
+
+.guestbook-item {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 22px;
+    padding: 28px;
+}
+
+.guestbook-item p {
+    color: #ddd;
+    line-height: 1.8;
+}
+
+.guestbook-item .guestbook-meta {
+    margin-top: 14px;
+    color: #8f9daf;
+    font-size: 0.9rem;
+}
+
+.guestbook-empty {
+    color: #9aa2b8;
+}
+
+@media (max-width: 900px) {
+    #guestbook {
+        padding: 50px 24px;
+    }
+}
+
+@media (max-width: 600px) {
+    #guestbook {
+        padding: 40px 18px;
+    }
+}
 /* 푸터 */
 footer {
     text-align: center;
