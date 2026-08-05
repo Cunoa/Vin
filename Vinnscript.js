@@ -216,12 +216,30 @@ const player = {
     score: 0,
 };
 
-document.addEventListener('keydown', event => {
-    // 테트리스 게임 중 화살표 키를 누를 때 화면이 스크롤되는 기본 동작을 막음
-    if (['ArrowLeft', 'ArrowRight', 'ArrowDown', 'ArrowUp', ' '].includes(event.key)) {
-        event.preventDefault();
-    }
+const navLinks = document.querySelectorAll('nav ul li a');
+const sections = Array.from(navLinks).map(link => document.querySelector(link.hash));
 
+function updateActiveMenu() {
+    const scrollPos = window.scrollY + window.innerHeight * 0.3;
+    let currentSection = sections[0];
+
+    sections.forEach(section => {
+        if (section && section.offsetTop <= scrollPos) {
+            currentSection = section;
+        }
+    });
+
+    navLinks.forEach(link => {
+        link.classList.toggle('active', link.hash === `#${currentSection.id}`);
+    });
+}
+
+if (navLinks.length > 0 && sections.length > 0) {
+    window.addEventListener('scroll', updateActiveMenu);
+    window.addEventListener('load', updateActiveMenu);
+}
+
+document.addEventListener('keydown', event => {
     if (event.key === 'ArrowLeft') {
         playerMove(-1);
     } else if (event.key === 'ArrowRight') {
