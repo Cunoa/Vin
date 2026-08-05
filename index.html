@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VINN | Creative Portfolio & Tetris</title>
-    <!-- Vinncss.css 파일 연동 -->
+    <title>VINN | Creative Portfolio</title>
+    <!-- Vinncss.css 파일이 정상적으로 연결된 코드입니다 -->
     <link rel="stylesheet" href="Vinncss.css">
     <!-- 구글 폰트 연동 -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
@@ -17,8 +17,8 @@
         <nav>
             <ul>
                 <li><a href="#about">About</a></li>
+                <li><a href="#product">Product</a></li>
                 <li><a href="#projects">Projects</a></li>
-                <li><a href="#tetris-section">Tetris</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
         </nav>
@@ -26,16 +26,21 @@
 
     <!-- 메인 비주얼 섹션 -->
     <section class="hero">
-        <div class="hero-content">
-            <h3>Hello, I am</h3>
-            <h1>VINN</h1>
-            <p>Creative Developer & Designer building digital experiences.</p>
-            <a href="#projects" class="btn">Explore Work</a>
+        <div class="hero-banner">
+            <div class="hero-content">
+                <span class="hero-tag">Main Banner</span>
+                <h1>VINN</h1>
+                <p class="hero-description">Creative Developer & Designer building digital experiences with strong visuals and intuitive interactions.</p>
+                <a href="#projects" class="btn">Explore Work</a>
+            </div>
+            <div class="hero-image">
+                <img src="assets/main-image.jpg" alt="Main banner image">
+            </div>
         </div>
     </section>
 
     <!-- About 섹션 -->
-    <section id="about" class="about fade-in">
+    <section id="about" class="about">
         <h2>About Me</h2>
         <div class="about-container">
             <div class="about-text">
@@ -44,23 +49,27 @@
         </div>
     </section>
 
+    <!-- Product 섹션 -->
+    <section id="product" class="product">
+        <h2>Product</h2>
+        <div class="product-container">
+            <p>강력하고 직관적인 디자인, 사용자 중심의 기능, 빠른 성능을 모두 갖춘 디지털 제품입니다.</p>
+        </div>
+    </section>
+
     <!-- 프로젝트 섹션 -->
-    <section id="projects" class="projects fade-in">
+    <section id="projects" class="projects">
         <h2>Featured Projects</h2>
         <div class="project-grid">
             <div class="project-card">
-                <div class="project-img-wrapper">
-                    <div class="project-img bg-1"></div>
-                </div>
+                <div class="project-img bg-1"></div>
                 <div class="project-info">
                     <h3>Project One</h3>
                     <p>HTML, CSS, JavaScript를 활용한 반응형 웹사이트 제작 프로젝트입니다.</p>
                 </div>
             </div>
             <div class="project-card">
-                <div class="project-img-wrapper">
-                    <div class="project-img bg-2"></div>
-                </div>
+                <div class="project-img bg-2"></div>
                 <div class="project-info">
                     <h3>Project Two</h3>
                     <p>사용자 중심의 UI/UX 디자인 및 브랜드 아이덴티티 구축 작업입니다.</p>
@@ -69,32 +78,8 @@
         </div>
     </section>
 
-    <!-- 혁신적인 테트리스 게임 섹션 추가 -->
-    <section id="tetris-section" class="tetris-section fade-in">
-        <h2>Mini Play Zone</h2>
-        <p class="tetris-desc">잠시 쉬어가세요! 모던하게 재해석한 테트리스 게임입니다.</p>
-        
-        <div class="tetris-container">
-            <div class="tetris-board-wrapper">
-                <canvas id="tetris" width="240" height="400"></canvas>
-            </div>
-            <div class="tetris-sidebar">
-                <div class="score-board">
-                    <span>SCORE</span>
-                    <h3 id="score">0</h3>
-                </div>
-                <div class="controls-guide">
-                    <p>⬅️ ➡️ : 이동</p>
-                    <p>⬆️ : 회전</p>
-                    <p>⬇️ : 빨리 내리기</p>
-                </div>
-                <button id="start-btn" class="btn">게임 시작</button>
-            </div>
-        </div>
-    </section>
-
     <!-- 연락처 섹션 -->
-    <section id="contact" class="contact fade-in">
+    <section id="contact" class="contact">
         <h2>Get In Touch</h2>
         <p>함께 멋진 작업을 만들어갈 기회를 기다리고 있습니다.</p>
         <a href="mailto:your_email@example.com" class="btn">Contact Me</a>
@@ -105,20 +90,6 @@
         <p>&copy; 2026 VINN. All rights reserved.</p>
     </footer>
 
-    <!-- 스크롤 애니메이션 및 테트리스 JS 파일 연결 -->
-    <script>
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, { threshold: 0.1 });
-
-        document.querySelectorAll('.fade-in').forEach((section) => {
-            observer.observe(section);
-        });
-    </script>
     <script src="Vinnscript.js"></script>
 </body>
 </html>
