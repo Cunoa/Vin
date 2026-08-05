@@ -1,221 +1,3 @@
-const canvas = document.getElementById('tetris');
-const context = canvas.getContext('2d');
-const scoreElement = document.getElementById('score');
-const startBtn = document.getElementById('start-btn');
-
-context.scale(20, 20);
-
-// 줄 클리어 시 점수 계산
-function arenaSweep() {
-    let rowCount = 1;
-    let score = 0;
-    outer: for (let y = arena.length - 1; y > 0; --y) {
-        for (let x = 0; x < arena[y].length; ++x) {
-            if (arena[y][x] === 0) {
-                continue outer;
-            }
-        }
-        const row = arena.splice(y, 1)[0].fill(0);
-        arena.unshift(row);
-        ++y;
-
-        score += rowCount * 10;
-        rowCount *= 2;
-    }
-    player.score += score;
-    scoreElement.innerText = player.score;
-}
-
-function collide(arena, player) {
-    const [m, o] = [player.matrix, player.pos];
-    for (let y = 0; y < m.length; ++y) {
-        for (let x = 0; x < m[y].length; ++x) {
-            if (m[y][x] !== 0 &&
-               (arena[y + o.y] && arena[y + o.y][x + o.x]) !== 0) {
-                return true;
-            }
-        }
-    }
-    return false;
-}
-
-function createMatrix(w, h) {
-    const matrix = [];
-    while (h--) {
-        matrix.push(new Array(w).fill(0));
-    }
-    return matrix;
-}
-
-function createPiece(type) {
-    if (type === 'T') {
-        return [
-            [0, 1, 0],
-            [1, 1, 1],
-            [0, 0, 0],
-        ];
-    } else if (type === 'O') {
-        return [
-            [2, 2],
-            [2, 2],
-        ];
-    } else if (type === 'L') {
-        return [
-            [0, 0, 3],
-            [3, 3, 3],
-            [0, 0, 0],
-        ];
-    } else if (type === 'J') {
-        return [
-            [4, 0, 0],
-            [4, 4, 4],
-            [0, 0, 0],
-        ];
-    } else if (type === 'I') {
-        return [
-            [0, 5, 0, 0],
-            [0, 5, 0, 0],
-            [0, 5, 0, 0],
-            [0, 5, 0, 0],
-        ];
-    } else if (type === 'S') {
-        return [
-            [0, 6, 6],
-            [6, 6, 0],
-            [0, 0, 0],
-        ];
-    } else if (type === 'Z') {
-        return [
-            [7, 7, 0],
-            [0, 7, 7],
-            [0, 0, 0],
-        ];
-    }
-}
-
-function drawMatrix(matrix, offset) {
-    matrix.forEach((row, y) => {
-        row.forEach((value, x) => {
-            if (value !== 0) {
-                context.fillStyle = colors[value];
-                context.fillRect(x + offset.x, y + offset.y, 1, 1);
-            }
-        });
-    });
-}
-
-function draw() {
-    context.fillStyle = '#0a0a0a';
-    context.fillRect(0, 0, canvas.width, canvas.height);
-
-    drawMatrix(arena, {x: 0, y: 0});
-    drawMatrix(player.matrix, player.pos);
-}
-
-function merge(arena, player) {
-    player.matrix.forEach((row, y) => {
-        row.forEach((value, x) => {
-            if (value !== 0) {
-                arena[y + player.pos.y][x + player.pos.x] = value;
-            }
-        });
-    });
-}
-
-function playerDrop() {
-    player.pos.y++;
-    if (collide(arena, player)) {
-        player.pos.y--;
-        merge(arena, player);
-        playerReset();
-        arenaSweep();
-    }
-    dropCounter = 0;
-}
-
-function playerMove(dir) {
-    player.pos.x += dir;
-    if (collide(arena, player)) {
-        player.pos.x -= dir;
-    }
-}
-
-function playerReset() {
-    const pieces = 'TJLOSZI';
-    player.matrix = createPiece(pieces[(pieces.length * Math.random()) | 0]);
-    player.pos.y = 0;
-    player.pos.x = (arena[0].length / 2 | 0) - (player.matrix[0].length / 2 | 0);
-    if (collide(arena, player)) {
-        arena.forEach(row => row.fill(0));
-        player.score = 0;
-        scoreElement.innerText = player.score;
-    }
-}
-
-function playerRotate(dir) {
-    const posX = player.pos.x;
-    let offset = 1;
-    rotate(player.matrix, dir);
-    while (collide(arena, player)) {
-        player.pos.x += offset;
-        offset = -(offset + (offset > 0 ? 1 : -1));
-        if (offset > player.matrix[0].length) {
-            rotate(player.matrix, -dir);
-            player.pos.x = posX;
-            return;
-        }
-    }
-}
-
-function rotate(matrix, dir) {
-    for (let y = 0; y < matrix.length; ++y) {
-        for (let x = 0; x < y; ++x) {
-            [matrix[x][y], matrix[y][x]] = [matrix[y][x], matrix[x][y]];
-        }
-    }
-    if (dir > 0) {
-        matrix.forEach(row => row.reverse());
-    } else {
-        matrix.reverse();
-    }
-}
-
-let dropCounter = 0;
-let dropInterval = 1000;
-let lastTime = 0;
-
-function update(time = 0) {
-    const deltaTime = time - lastTime;
-    lastTime = time;
-
-    dropCounter += deltaTime;
-    if (dropCounter > dropInterval) {
-        playerDrop();
-    }
-
-    draw();
-    requestAnimationFrame(update);
-}
-
-const colors = [
-    null,
-    '#ff6b6b', // 포인트 컬러
-    '#3498db',
-    '#9b59b6',
-    '#f1c40f',
-    '#2ecc71',
-    '#e67e22',
-    '#1abc9c',
-];
-
-const arena = createMatrix(12, 20);
-
-const player = {
-    pos: {x: 0, y: 0},
-    matrix: null,
-    score: 0,
-};
-
 const navLinks = document.querySelectorAll('nav ul li a');
 const sections = Array.from(navLinks).map(link => document.querySelector(link.hash));
 
@@ -234,31 +16,103 @@ function updateActiveMenu() {
     });
 }
 
-if (navLinks.length > 0 && sections.length > 0) {
-    window.addEventListener('scroll', updateActiveMenu);
-    window.addEventListener('load', updateActiveMenu);
+function applySectionBackground(sectionId) {
+    document.body.classList.remove('bg-about', 'bg-product', 'bg-projects', 'bg-contact');
+
+    if (sectionId === 'about') {
+        document.body.classList.add('bg-about');
+    } else if (sectionId === 'product') {
+        document.body.classList.add('bg-product');
+    } else if (sectionId === 'projects') {
+        document.body.classList.add('bg-projects');
+    } else if (sectionId === 'contact') {
+        document.body.classList.add('bg-contact');
+    }
 }
 
-document.addEventListener('keydown', event => {
-    if (event.key === 'ArrowLeft') {
-        playerMove(-1);
-    } else if (event.key === 'ArrowRight') {
-        playerMove(1);
-    } else if (event.key === 'ArrowDown') {
-        playerDrop();
-    } else if (event.key === 'ArrowUp') {
-        playerRotate(1);
+if (navLinks.length > 0 && sections.length > 0) {
+    window.addEventListener('scroll', () => {
+        updateActiveMenu();
+        const activeLink = document.querySelector('nav ul li a.active');
+        if (activeLink) {
+            applySectionBackground(activeLink.hash.replace('#', ''));
+        }
+    });
+    window.addEventListener('load', () => {
+        updateActiveMenu();
+        const activeLink = document.querySelector('nav ul li a.active');
+        if (activeLink) {
+            applySectionBackground(activeLink.hash.replace('#', ''));
+        }
+    });
+}
+
+const guestbookForm = document.getElementById('guestbook-form');
+const guestbookInput = document.getElementById('guestbook-input');
+const guestbookList = document.getElementById('guestbook-list');
+
+function getGuestbookKey(ip) {
+    return `guestbook_${ip}`;
+}
+
+function renderGuestbook() {
+    const saved = JSON.parse(localStorage.getItem('guestbook_entries') || '[]');
+    guestbookList.innerHTML = '';
+
+    if (!saved.length) {
+        guestbookList.innerHTML = '<p class="guestbook-empty">아직 방명록이 없습니다. 첫 글을 남겨보세요.</p>';
+        return;
     }
+
+    saved.forEach(entry => {
+        const item = document.createElement('div');
+        item.className = 'guestbook-item';
+        item.innerHTML = `
+            <p>${entry.message}</p>
+            <div class="guestbook-meta">${entry.timestamp} • ${entry.ip}</div>
+        `;
+        guestbookList.appendChild(item);
+    });
+}
+
+async function fetchPublicIP() {
+    try {
+        const response = await fetch('https://api.ipify.org?format=json');
+        const data = await response.json();
+        return data.ip;
+    } catch (error) {
+        console.error('IP 조회 실패:', error);
+        return 'unknown';
+    }
+}
+
+guestbookForm.addEventListener('submit', async event => {
+    event.preventDefault();
+    const message = guestbookInput.value.trim();
+    if (!message) {
+        return;
+    }
+
+    const ip = await fetchPublicIP();
+    const key = getGuestbookKey(ip);
+    const existing = localStorage.getItem(key);
+    if (existing) {
+        alert('이미 방명록을 작성하셨습니다. IP당 한 개만 등록 가능합니다.');
+        return;
+    }
+
+    const entries = JSON.parse(localStorage.getItem('guestbook_entries') || '[]');
+    const newEntry = {
+        ip,
+        message,
+        timestamp: new Date().toLocaleString(),
+    };
+    entries.unshift(newEntry);
+    localStorage.setItem('guestbook_entries', JSON.stringify(entries));
+    localStorage.setItem(key, JSON.stringify(newEntry));
+
+    guestbookInput.value = '';
+    renderGuestbook();
 });
 
-startBtn.addEventListener('click', () => {
-    arena.forEach(row => row.fill(0));
-    player.score = 0;
-    scoreElement.innerText = player.score;
-    playerReset();
-    lastTime = performance.now();
-    startBtn.blur(); // 버튼 포커스 해제 (화살표 키 스크롤 방지)
-});
-
-playerReset();
-update();
+document.addEventListener('DOMContentLoaded', renderGuestbook);
